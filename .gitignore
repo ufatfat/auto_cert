@@ -1,2 +1,16 @@
 .idea/
 .DS_Store/
+
+persist.json
+persist_*.json
+
+main*.go
+_main.go
+*.crt
+*.key
+
+config.json
+
+vendor/
+
+*.exe

@@ -1,0 +1,23 @@
+{
+  "persistence": {
+    "path": "./your/persistence/path"
+  },
+  "dns_challenge": {
+    "api_key": "your_alidns_access_key_id",
+    "secret_key": "your_alidns_access_key_secret"
+  },
+  "ca": {
+    "url": "https://acme-v02.api.letsencrypt.org/directory"
+  },
+  "cert_user": {
+    "email": "name@your-site.com",
+    "key": {
+      "type": "file | string",
+      "value": "your_private_key"
+    }
+  },
+  "cdn": {
+    "access_key": "your_alicdn_access_key_id",
+    "secret_key": "your_alicdn_access_key_secret"
+  }
+}
