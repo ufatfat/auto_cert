@@ -6,9 +6,14 @@ import (
 	"github.com/go-acme/lego/v4/registration"
 )
 
+type CDNClient interface {
+	UpdateCDN(string, string, string) error
+}
+
 type Domain struct {
 	DomainName          string
 	certificateResource *certificate.Resource
+	CDNClient
 }
 
 type User struct {
@@ -16,3 +21,5 @@ type User struct {
 	Registration *registration.Resource
 	key          crypto.PrivateKey
 }
+
+type DomainConfig struct{}

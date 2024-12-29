@@ -46,7 +46,7 @@ func (t *timerManager) Load() {
 				}
 
 				t.timers[dn] = &domainTimer{
-					domain: &domain,
+					domain: domain,
 					jobID:  entryID,
 				}
 			}()

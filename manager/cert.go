@@ -1,12 +1,8 @@
 package manager
 
 import (
-	"auto_cert/config"
 	"errors"
 	"fmt"
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk"
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials"
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
 	"github.com/go-acme/lego/v4/certificate"
 	"os"
 )
@@ -56,33 +52,6 @@ func (d *Domain) WritePrivateKey(path string) (err error) {
 	return os.WriteFile(fmt.Sprintf("./%s/%s.key", path, d.DomainName), d.certificateResource.PrivateKey, 0755)
 }
 
-func (d *Domain) UpdateCDN() (err error) {
-	sdkConfig := sdk.NewConfig()
-
-	credential := credentials.NewAccessKeyCredential(config.CDN.AccessKey, config.CDN.SecretKey)
-	cdnClient, err := sdk.NewClientWithOptions("cn-qingdao", sdkConfig, credential)
-	if err != nil {
-		return
-	}
-
-	request := requests.NewCommonRequest()
-
-	request.Method = "POST"
-	request.Scheme = "https" // https | http
-	request.Domain = "cdn.aliyuncs.com"
-	request.Version = "2018-05-10"
-	request.ApiName = "SetCdnDomainSSLCertificate"
-	request.QueryParams["SSLProtocol"] = "on"
-	request.QueryParams["SSLPub"] = string(d.certificateResource.Certificate)
-	request.QueryParams["SSLPri"] = string(d.certificateResource.PrivateKey)
-	request.QueryParams["DomainName"] = d.DomainName
-
-	response, err := cdnClient.ProcessCommonRequest(request)
-	if err != nil {
-		return
-	}
-	if !response.IsSuccess() {
-		return errors.New(response.GetHttpContentString())
-	}
-	return
+func (d *Domain) SetCDNClient(cdnClient CDNClient) {
+	d.CDNClient = cdnClient
 }

@@ -108,8 +108,14 @@ func init() {
 	}
 }
 
-func NewDomain(dn string) Domain {
-	return Domain{
+func NewDomain(dn string) *Domain {
+	return &Domain{
+		DomainName: dn,
+	}
+}
+
+func NewDomainWithConfig(dn string, config ...DomainConfig) *Domain {
+	return &Domain{
 		DomainName: dn,
 	}
 }
